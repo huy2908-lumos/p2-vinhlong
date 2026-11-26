@@ -805,7 +805,10 @@ function viewAccess() {
 /* ---------- DANH SÁCH KHÁC ---------- */
 function viewLists() {
   const ex = S.extra || {}; const N = Object.entries(((ex.nisso || {}).s) || {});
-  const tabs = [['nisso', 'P2 – Nisso'], ...Object.entries(S.lists || {}).map(([k, v]) => [k, v.title || k]), ...Object.keys(ex).filter(k => k.startsWith('ref_')).map(k => [k, ex[k].title || k])];
+  /* Ẩn: Điểm HP chưa khớp, Tổng quan chương trình, Chất lượng đào tạo (mọi tài khoản); Lộ trình theo khóa chỉ admin thấy */
+  const HIDE = new Set(['diem_chuakhop', 'ref_ctdt', 'ref_kqdt']), ADMIN_ONLY = new Set(['ref_chuongtrinh']);
+  const showLt = k => !HIDE.has(k) && (!ADMIN_ONLY.has(k) || S.isAdmin);
+  const tabs = [['nisso', 'P2 – Nisso'], ...Object.entries(S.lists || {}).map(([k, v]) => [k, v.title || k]), ...Object.keys(ex).filter(k => k.startsWith('ref_')).map(k => [k, ex[k].title || k])].filter(([k]) => showLt(k));
   const cur = tabs.some(t => t[0] === S.lt) ? S.lt : tabs[0][0]; S.lt = cur;
   let body = '';
   const st = fst('ds:' + cur); let bar = '';
