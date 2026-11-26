@@ -1197,11 +1197,11 @@ function load(d) {
 const ADMIN_MAIL = 'huy2908@gmail.com';
 function gate(msg, email) {
   document.body.classList.add('locked');
-  $('#view').innerHTML = `<section class="gate band"><div class="gcard"><div class="seal big" aria-hidden="true">P2</div><h1>Báo cáo chương trình P2 · Vĩnh Long</h1><p class="sub">Nhập email công việc đã được anh Huy cấp quyền xem.</p>
+  $('#view').innerHTML = `<section class="gate band"><div class="gcard"><div class="seal big" aria-hidden="true">P2</div><h1>Báo cáo chương trình P2 · Vĩnh Long</h1><p class="sub">Nhập email công việc đã được admin cấp quyền xem.</p>
   <form id="gForm" autocomplete="on"><div class="fld"><label for="gEmail">Email</label><input type="email" id="gEmail" required autocomplete="email" inputmode="email" value="${esc(email || '')}" placeholder="ten@esuhai.com"></div>
   <label class="rem"><input type="checkbox" id="gRem" checked> Ghi nhớ trên thiết bị này</label>
   ${msg && msg !== 'NOACCESS' ? `<p class="gerr" role="alert">${esc(msg)}</p>` : ''}<button class="btn pri" type="submit" id="gBtn">Xem báo cáo</button></form>
-  ${msg === 'NOACCESS' ? `<form id="rqForm" class="rq" autocomplete="on"><p class="gerr" role="alert">Email này chưa được cấp quyền xem.</p><h2>Gửi yêu cầu cấp quyền tới admin</h2><p>Vui lòng điền thông tin để gửi yêu cầu tới anh Huy (admin). Sau khi được duyệt, bạn đăng nhập lại bằng email ở trên.</p>
+  ${msg === 'NOACCESS' ? `<form id="rqForm" class="rq" autocomplete="on"><p class="gerr" role="alert">Email này chưa được cấp quyền xem.</p><h2>Gửi yêu cầu cấp quyền tới admin</h2><p>Vui lòng điền thông tin để gửi yêu cầu tới admin. Sau khi được duyệt, bạn đăng nhập lại bằng email ở trên.</p>
   <div class="fld"><label for="rqName">Họ và tên *</label><input id="rqName" required autocomplete="name"></div>
   <div class="fld"><label for="rqOrg">Đơn vị / Trường / Chức vụ</label><input id="rqOrg" autocomplete="organization"></div>
   <div class="fld"><label for="rqWhy">Lý do cần xem báo cáo</label><textarea id="rqWhy" rows="2"></textarea></div>
@@ -1209,7 +1209,7 @@ function gate(msg, email) {
   <p id="rqNote">Yêu cầu được gửi tới <b>${ADMIN_MAIL}</b>.</p></form>` : ''}</div></section>`;
   const rq = $('#rqForm');
   if (rq) {
-    const txt = () => `Kính gửi anh Huy,\n\nEm xin được cấp quyền xem Báo cáo chương trình P2 · Vĩnh Long.\n\n- Email đăng nhập: ${$('#gEmail').value.trim().toLowerCase()}\n- Họ và tên: ${$('#rqName').value.trim()}\n- Đơn vị / Trường / Chức vụ: ${$('#rqOrg').value.trim()}\n- Lý do: ${$('#rqWhy').value.trim()}\n\nTrân trọng.`;
+    const txt = () => `Kính gửi Admin,\n\nEm xin được cấp quyền xem Báo cáo chương trình P2 · Vĩnh Long.\n\n- Email đăng nhập: ${$('#gEmail').value.trim().toLowerCase()}\n- Họ và tên: ${$('#rqName').value.trim()}\n- Đơn vị / Trường / Chức vụ: ${$('#rqOrg').value.trim()}\n- Lý do: ${$('#rqWhy').value.trim()}\n\nTrân trọng.`;
     const subj = () => `[P2 Vĩnh Long] Yêu cầu cấp quyền xem – ${$('#gEmail').value.trim().toLowerCase()}`;
     rq.addEventListener('submit', ev => { ev.preventDefault(); location.href = `mailto:${ADMIN_MAIL}?subject=${encodeURIComponent(subj())}&body=${encodeURIComponent(txt())}`;
       $('#rqNote').innerHTML = `<span class="ok">Ứng dụng email đã mở sẵn nội dung — bạn chỉ cần bấm Gửi.</span> Nếu máy không mở ứng dụng email, hãy bấm “Sao chép nội dung” rồi gửi tới <b>${ADMIN_MAIL}</b>.`; });
